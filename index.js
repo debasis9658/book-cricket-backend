@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = 8000;
 const db = require('./config/mongoose');
@@ -37,12 +38,15 @@ app.use(session({
     store: sessionStore,
 }));
 
+app.use(cors());
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 
 
-
+//use express router
+app.use('/', require('./routes'));
 
 app.listen(port, function(err){
     if(err){
