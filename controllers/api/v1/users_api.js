@@ -97,3 +97,36 @@ module.exports.signup = async function(req, res) {
     }
   };
 
+  module.exports.getUsers = async function(req, res) {
+    try{
+        let users = await User.find({});
+        let extractedUsers = users.map(user => {
+          return {
+            name: user.name,
+            email: user.email
+          };
+        });
+
+        return res.json(200, {
+          message: "Here is the data of all of your user",
+          data: {
+            extractedUsers
+          }
+        })
+    }
+    catch(err){
+        return res.json(500, {
+            message: "Internal server error"
+        });
+    }
+  };
+
+  module.exports.signout = function (req, res) {
+    // Clear JWT token from local storage or session storage
+    // Example using localStorage:
+  
+    return res.json(200, {
+      message: 'Signout successful',
+    });
+  };
+
